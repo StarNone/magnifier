@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .box{
+            position: relative;
+            display: inline-block;
+            width: 400px;
+            height: 300px;
+            background: url("./image/1.jpg");
+            cursor:move;
+        }
+        .image{
+            width: 300px;
+            height: 300px;
+            background: url("./image/1.jpg") no-repeat;
+            background-size: 1200px 900px;
+            display: none;
+        }
+        .pointer{
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: url("./image/2.png");
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="pointer"></div>
+    </div>
+    <div class="image"></div>
+</body>
+<script src="./jquery.js"></script>
+<script>
+    $(".box").mouseenter(function() {
+        $(".pointer").css("display","block");
+        $(".image").css("display","inline-block");
+        $(document).bind("mousemove",function (e) {
+            if(e.clientX >= 50 && e.clientX <= 350){
+                $(".pointer").css("left",e.clientX - 50); 
+            }else if(e.clientX < 50){
+                $(".pointer").css("left",0);
+            }else{
+                $(".pointer").css("left",300);
+            }
+            if(e.clientY >= 50 && e.clientY <= 250){
+                $(".pointer").css("top",e.clientY - 50);   
+            }else if(e.clientY < 50){
+                $(".pointer").css("top",0);
+            }else{
+                $(".pointer").css("top",200);
+            }
+            var x = parseInt($(".pointer").css("left"));
+            var y = parseInt($(".pointer").css("top"));
+            $(".image").css("background-position-x",-x*3);
+            $(".image").css("background-position-y",-y*3);
+        })
+    })
+    $(".box").mouseleave(function(){
+        $(".pointer").css("display","none");
+        $(".image").css("display","none");
+        $(document).unbind("mousemove");
+    })
+</script>
+</html>
